@@ -61,10 +61,15 @@ const Navbar = () => {
     <header className="bg-white shadow-lg border-b border-gray-200">
       {/* Main nav */}
       <div className="container flex items-center justify-between py-4">
-        {/* Logo */}
-        <div className="flex items-center gap-3 ml-4">
-          <span className="font-heading font-bold text-2xl text-blue-900 tracking-tight">TATA POWER SOLAR</span>
-        </div>
+        
+        {/* Logo - Updated to use image from public folder */}
+        <a href="/" className="flex items-center gap-3 ml-4">
+          <img 
+            src="/tata-power-logo.png" 
+            alt="Tata Power Solar" 
+            className="h-10 md:h-12 w-auto object-contain" 
+          />
+        </a>
 
         {/* Desktop nav - Center aligned */}
         <nav className="hidden lg:flex items-center gap-6 relative flex-1 justify-center">
