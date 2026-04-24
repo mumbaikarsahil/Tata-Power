@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Sun, X, MessageCircle } from "lucide-react";
+import { Sun, X, MessageCircle, Maximize, Minimize } from "lucide-react";
 
 const FloatingButtons = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const [suggestionIndex, setSuggestionIndex] = useState(0);
 
+  // Paste your direct Hugging Face URL here
   const huggingFaceUrl = "https://devkstra-helio-cast-solar.hf.space";
+
   // The "News Ticker" prompts
   const suggestions = [
     "Get your solar forecast ☀️",
@@ -24,11 +27,24 @@ const FloatingButtons = () => {
     return () => clearInterval(interval);
   }, [isOpen]);
 
+  // Handle closing to ensure it resets the fullscreen state
+  const handleClose = () => {
+    setIsOpen(false);
+    setTimeout(() => setIsFullScreen(false), 300); // Reset after exit animation
+  };
+
   return (
     <>
       {/* Chatbot Window */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-[400px] h-[600px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden flex flex-col z-50 animate-in slide-in-from-bottom-4 fade-in duration-300">
+        <div 
+          className={`fixed bg-white shadow-2xl border border-gray-200 overflow-hidden flex flex-col animate-in slide-in-from-bottom-4 fade-in duration-300 transition-all
+            ${isFullScreen 
+              ? 'inset-0 w-full h-full z-[100] rounded-none' 
+              : 'bottom-24 right-6 w-[400px] h-[600px] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-8rem)] rounded-2xl z-50'
+            }
+          `}
+        >
           
           {/* Header */}
           <div className="bg-black text-white p-4 flex justify-between items-center">
@@ -36,35 +52,48 @@ const FloatingButtons = () => {
               <Sun className="w-5 h-5" />
               <span className="font-semibold tracking-wide text-sm">Helio Cast</span>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="hover:bg-white/20 p-1.5 rounded-full transition-colors"
-              aria-label="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            
+            {/* Controls */}
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setIsFullScreen(!isFullScreen)}
+                className="hover:bg-white/20 p-1.5 rounded-full transition-colors"
+                aria-label={isFullScreen ? "Minimize" : "Maximize"}
+              >
+                {isFullScreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+              </button>
+              <button
+                onClick={handleClose}
+                className="hover:bg-white/20 p-1.5 rounded-full transition-colors"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Hugging Face App Embed */}
-          <div className="flex-1 w-full bg-gray-50">
+          <div className="flex-1 w-full bg-gray-50 relative">
             <iframe
               src={huggingFaceUrl}
-              className="w-full h-full border-none"
+              className="absolute inset-0 w-full h-full border-none"
               title="Helio Cast App"
             />
           </div>
 
           {/* Custom Footer */}
-          <div className="bg-white p-2 text-center text-[10px] text-gray-400 border-t border-gray-100 uppercase tracking-widest">
-            Powered by <span className="font-semibold text-gray-600">Biillo systems</span> 1.2v
-          </div>
+          {!isFullScreen && (
+            <div className="bg-white p-2 text-center text-[10px] text-gray-400 border-t border-gray-100 uppercase tracking-widest shrink-0">
+              Powered by <span className="font-semibold text-gray-600">Biillo systems</span> 1.2v
+            </div>
+          )}
         </div>
       )}
 
       {/* Floating Button & Ticker Area */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className={`fixed bottom-6 right-6 flex flex-col items-end gap-3 ${isFullScreen ? 'z-[101]' : 'z-50'}`}>
         
-        {/* Ticker Bubble (Only shows when chat is closed) */}
+        {/* Ticker Bubble (Only shows when chat is closed completely) */}
         {!isOpen && (
           <div className="bg-white border border-gray-100 shadow-lg rounded-2xl px-4 py-2.5 mr-2 cursor-pointer transition-all hover:scale-105 animate-in fade-in slide-in-from-bottom-2"
                onClick={() => setIsOpen(true)}>
@@ -78,18 +107,20 @@ const FloatingButtons = () => {
           </div>
         )}
 
-        {/* Standard Logo Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className={`bg-black text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 ${isOpen ? 'rotate-90 scale-90' : 'hover:scale-110'}`}
-          aria-label="Open Chat"
-        >
-          {isOpen ? (
-            <X className="w-6 h-6" />
-          ) : (
-            <MessageCircle className="w-6 h-6" />
-          )}
-        </button>
+        {/* Standard Logo Button - Hides when in full screen so it doesn't block the UI */}
+        {!isFullScreen && (
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`bg-black text-white p-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 ${isOpen ? 'rotate-90 scale-90' : 'hover:scale-110'}`}
+            aria-label="Open Chat"
+          >
+            {isOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <MessageCircle className="w-6 h-6" />
+            )}
+          </button>
+        )}
       </div>
     </>
   );
