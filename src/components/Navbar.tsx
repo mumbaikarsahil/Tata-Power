@@ -62,12 +62,12 @@ const Navbar = () => {
       {/* Main nav */}
       <div className="container flex items-center justify-between py-4">
         
-        {/* Logo - Updated to use external direct link */}
-        <a href="/" className="flex items-center gap-3 ml-4">
+        {/* Logo - Increased height and added a slight scale effect */}
+        <a href="/" className="flex items-center gap-3 ml-4 overflow-visible">
           <img 
             src="https://www.tatapowersolar.com/wp-content/themes/tpsolar/assets/images/tata-power-solar-logo.jpg" 
             alt="Tata Power Solar" 
-            className="h-10 md:h-12 w-auto object-contain" 
+            className="h-16 md:h-20 w-auto object-contain transform scale-110 origin-left transition-transform" 
           />
         </a>
 
