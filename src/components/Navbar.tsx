@@ -62,13 +62,14 @@ const Navbar = () => {
       {/* Main nav */}
       <div className="container flex items-center justify-between py-4">
         
-        {/* Logo - Increased height and added a slight scale effect */}
-        <a href="/" className="flex items-center gap-3 ml-4 overflow-visible">
+        {/* Logo - Updated to use image from public folder */}
+        <a href="/" className="flex items-center gap-3 ml-4">
           <img 
-            src="/tata-power-logo.jpg" 
+            src="/tata-power-logo.png" 
             alt="Tata Power Solar" 
             className="h-16 md:h-20 w-auto object-contain transform scale-110 origin-left transition-transform" 
-          />
+          /> 
+            
         </a>
 
         {/* Desktop nav - Center aligned */}
