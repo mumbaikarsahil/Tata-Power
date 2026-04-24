@@ -65,7 +65,7 @@ const Navbar = () => {
         {/* Logo - Increased height and added a slight scale effect */}
         <a href="/" className="flex items-center gap-3 ml-4 overflow-visible">
           <img 
-            src="/tata-power-solar-logo.jpg" 
+            src="/tata-power-logo.jpg" 
             alt="Tata Power Solar" 
             className="h-16 md:h-20 w-auto object-contain transform scale-110 origin-left transition-transform" 
           />
