@@ -62,10 +62,10 @@ const Navbar = () => {
       {/* Main nav */}
       <div className="container flex items-center justify-between py-4">
         
-        {/* Logo - Updated to use image from public folder */}
+        {/* Logo - Updated to use external direct link */}
         <a href="/" className="flex items-center gap-3 ml-4">
           <img 
-            src="/tata-power-logo.png" 
+            src="https://www.tatapowersolar.com/wp-content/themes/tpsolar/assets/images/tata-power-solar-logo.jpg" 
             alt="Tata Power Solar" 
             className="h-10 md:h-12 w-auto object-contain" 
           />
